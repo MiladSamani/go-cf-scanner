@@ -10,14 +10,14 @@ import (
 func LoadIpList() []string {
 
 	req, err := http.NewRequest("GET", "https://www.cloudflare.com/ips-v4", nil)
-	req
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	defer req.Body.Close()
+	defer resp.Body.Close()
 
-	res, err := io.ReadAll(req.Body)
+	res, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalln(err)
 	}
