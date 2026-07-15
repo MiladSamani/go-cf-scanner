@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-func GetTcping(ipAddr string, port int) bool {
-	conn, err := net.DialTimeout("tcp", fmt.Sprintf("%v:%v", ipAddr, port), time.Second*5)
+func GetTcping(ipAddr string, port, timeout int) bool {
+	conn, err := net.DialTimeout("tcp", fmt.Sprintf("%v:%v", ipAddr, port), time.Duration(timeout)*time.Second)
 	if err != nil {
 		return false
 	}

@@ -9,7 +9,7 @@ import (
 	"golang.org/x/net/ipv4"
 )
 
-func GetICMP(ipAddr string) bool {
+func GetICMP(ipAddr string, timeout int) bool {
 	c, err := icmp.ListenPacket("ip4:icmp", "")
 	if err != nil {
 		return false
@@ -28,7 +28,7 @@ func GetICMP(ipAddr string) bool {
 
 	c.WriteTo(data, &net.IPAddr{IP: net.ParseIP(ipAddr)})
 	// timeout
-	c.SetReadDeadline(time.Now().Add(time.Second * 2))
+	c.SetReadDeadline(time.Now().Add(time.Duration(timeout) * time.Second))
 
 	replyBtye := make([]byte, 1500)
 	reply, _, err := c.ReadFrom(replyBtye)
