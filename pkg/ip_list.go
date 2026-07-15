@@ -4,10 +4,9 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"strings"
 )
 
-func LoadIpList() []string {
+func LoadIpList() []byte {
 
 	req, err := http.NewRequest("GET", "https://www.cloudflare.com/ips-v4", nil)
 	resp, err := http.DefaultClient.Do(req)
@@ -21,6 +20,5 @@ func LoadIpList() []string {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	return strings.Split(string(res), "\n")
+	return res
 }
